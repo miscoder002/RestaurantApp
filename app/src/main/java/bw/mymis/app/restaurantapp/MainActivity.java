@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
                 if( actionBar.isShowing() ) {
                     Toast.makeText(MainActivity.this, "ActionBar 目前在顯示中,現在關閉", Toast.LENGTH_SHORT).show();
                     actionBar.hide();
+                    // 呼叫 hide 將 actionbar 隱藏
             //        actionBar.setDisplayShowHomeEnabled(false);
                 } else {
                     Toast.makeText(MainActivity.this, "ActionBar 已關閉,現在打開", Toast.LENGTH_SHORT).show();
