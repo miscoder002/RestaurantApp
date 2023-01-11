@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
             //        actionBar.setDisplayShowHomeEnabled(false);
                 } else {
                     Toast.makeText(MainActivity.this, "ActionBar 已關閉,現在打開", Toast.LENGTH_SHORT).show();
+                    // 顯示 action bar
                     actionBar.show();
 
                 }
