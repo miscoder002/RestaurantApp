@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/main_load" android:title="資料設定"/>
+    <item android:id="@+id/main_list" android:title="餐廳列表"/>
+    <item android:id="@+id/main_exit" android:title="離開"/>
+</menu>
