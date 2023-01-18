@@ -1,8 +1,10 @@
 package bw.mymis.app.restaurantapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,7 +13,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
@@ -100,6 +107,45 @@ public class DataMaintainActivity extends AppCompatActivity {
         });
         checkA();
         binding.txtLastUpdate.setText( activityPreference.getString("lastUpdate","無").toUpperCase() );
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.region_layout,null);
+                binding.btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(DataMaintainActivity.this);
+                builder.setView(dialogView);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        EditText etRegion= (EditText) dialogView.findViewById(R.id.txtFilterString);
+
+                        String region = etRegion.getText().toString();
+
+                        Toast.makeText(DataMaintainActivity.this, "尋找: " + region, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setTitle("設定新區域");
+                builder.create().show();
+            }
+        });
+        ArrayAdapter<CharSequence> datas = ArrayAdapter.createFromResource(this,R.array.datas, android.R.layout.simple_dropdown_item_1line);
+        binding.spinner.setAdapter(datas);
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                SharedPreferences p = getPreferences(MODE_PRIVATE);
+                p.edit().putInt("pos",i).apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        SharedPreferences p = getPreferences(MODE_PRIVATE);
+        int pos = p.getInt("pos",0);
+        binding.spinner.setSelection(pos);
 
     }
 

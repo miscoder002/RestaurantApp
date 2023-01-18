@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">台灣各縣市餐廳查詢</string>
     <string name="rest_list">所有推薦餐廳</string>
+    <string-array name="datas">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+    </string-array>
 </resources>
