@@ -22,12 +22,14 @@ public class RestaurantListActivity extends AppCompatActivity {
 
     ActivityRestaurantListBinding binding;
     RestaurantItemClickListener restaurantItemClickListener;
-
+    RestaurantAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRestaurantListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        //
+        SQLiteDatabase db = openOrCreateDatabase("restaurants",MODE_PRIVATE,null);
 
         // ActionBar 客製化
         getSupportActionBar().setDisplayUseLogoEnabled(true);
@@ -48,6 +50,17 @@ public class RestaurantListActivity extends AppCompatActivity {
                 // 此處 可以將畫面 轉換到 RestaurantDetailActivity 負責顯示餐廳詳細資訊的畫面 ( ui 轉 ui )
             }
         };
+        adapter = new RestaurantAdapter(db ,  restaurantItemClickListener);
+        binding.btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // adapter.setRegion(binding.txtRegion.getText().toString());
+                //binding.txtRegion.setText("臺中市");
+                adapter.setRegion(binding.txtRegion.getText().toString());
+                getSupportActionBar().setSubtitle(binding.txtRegion.getText().toString());
+                adapter.notifyDataSetChanged();
+            }
+        });
         //每一個 UI元件都必須要與上層綁定　( Layout 則必須與有關的 Activity 綁定 )
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.restaurantListView.setLayoutManager(linearLayoutManager);
@@ -60,8 +73,9 @@ public class RestaurantListActivity extends AppCompatActivity {
         // 資料的來源 ?  RecyclerView 指定需要與 RecyclerView.Adapter 物件綁定 提供資料與 細部的
         // ViewHolder Layout 一起呈現
         // Adapter 要負責 載入所有資料 並建立一個 UI View 容器 並把指定的資料填入 UI後 交給 RecyclerView顯示
-        SQLiteDatabase db = openOrCreateDatabase("restaurants",MODE_PRIVATE,null);
-        binding.restaurantListView.setAdapter( new RestaurantAdapter(db ,  restaurantItemClickListener) );
+
+        binding.restaurantListView.setAdapter( adapter );
+        binding.txtRegion.setText("臺中市");
     }
 
 

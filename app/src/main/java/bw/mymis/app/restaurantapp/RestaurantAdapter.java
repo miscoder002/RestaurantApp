@@ -42,7 +42,32 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
             }while ( cursor.moveToNext());
         }
         cursor.close();
-        db.close();
+        // db.close();
+    }
+    public void setRegion(String region) {
+        restAll.clear();;
+
+        Cursor cursor;
+        if( region.equals("all")) {
+            cursor = db.rawQuery("select * from restaurant;" , null );
+        } else {
+            cursor = db.rawQuery("select * from restaurant where region = ?", new String[]{region});
+        }
+
+        //請將資料轉成 adapter 本的資料結構備用 以免 db被系統回收關閉
+        if( cursor.getCount() > 0 ) {
+            cursor.moveToFirst();
+            do {
+                SimpleRestaurant simpleRestaurant = new SimpleRestaurant(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(3),
+                        cursor.getString(5)
+                );
+                restAll.add(simpleRestaurant);
+            }while ( cursor.moveToNext());
+        }
+        cursor.close();
     }
 
     // 從哪個 layout xml 建立 畫面UI ( 由 RecyclerView 呼叫(畫面捲動時)  開發者無法察覺)
