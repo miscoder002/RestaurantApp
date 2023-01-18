@@ -10,4 +10,9 @@
     <color name="brown">#996633</color>
     <color name="red_8080">#ff8080</color>
     <color name="blue_00cc">#00cccc</color>
+    <color name="dark_purple1">#762B73 </color>
+    <color name="dark_red">#762B03 </color>
+    <color name="pink01">#C651F0 </color>
+    <color name="greenyellow">#CDEA61</color>
+
 </resources>

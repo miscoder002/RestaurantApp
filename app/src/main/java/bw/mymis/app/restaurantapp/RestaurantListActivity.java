@@ -2,10 +2,12 @@ package bw.mymis.app.restaurantapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
@@ -76,6 +78,40 @@ public class RestaurantListActivity extends AppCompatActivity {
 
         binding.restaurantListView.setAdapter( adapter );
         binding.txtRegion.setText("臺中市");
+
+        // 對話框 範例
+        binding.btnDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 對話框物件 AlertDialog 但 本身只單純有屬性 與許多待設定選項
+                // Android 透過 Builder 輔助開發者設計畫面
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantListActivity.this);
+                builder.setTitle("是否確認下訂單?");
+                builder.setMessage("這是 飲料的訂單 內容");
+                builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(RestaurantListActivity.this, "任何button 都會之後都換關閉對話框", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(RestaurantListActivity.this, "使用者按下否", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNeutralButton("繼續逛逛", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(RestaurantListActivity.this, "繼續下單", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+        });
     }
 
 
