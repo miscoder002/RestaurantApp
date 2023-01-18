@@ -85,10 +85,18 @@ public class RestaurantListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // 對話框物件 AlertDialog 但 本身只單純有屬性 與許多待設定選項
                 // Android 透過 Builder 輔助開發者設計畫面
+                // 選項陣列
+                String [] items = { "新北市","臺北市","桃園縣","新竹縣","苗栗縣","臺中縣"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantListActivity.this);
                 builder.setTitle("是否確認下訂單?");
-                builder.setMessage("這是 飲料的訂單 內容");
+                //builder.setMessage("這是 飲料的訂單 內容");
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(RestaurantListActivity.this, "挑選縣市:" + items[i], Toast.LENGTH_SHORT).show();
+                    }
+                });
                 builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
